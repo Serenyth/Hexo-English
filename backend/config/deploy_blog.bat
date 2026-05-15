@@ -1,7 +1,7 @@
 
 @echo off
-cd /d "E:\inisBlog"
-echo 切换到博客目录: E:\inisBlog
+cd /d "D:/inisBlog"
+echo 切换到博客目录: D:/inisBlog
 echo 执行 hexo clean...
 call hexo clean
 echo 执行 hexo generate...

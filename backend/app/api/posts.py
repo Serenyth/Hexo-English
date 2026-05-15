@@ -299,31 +299,27 @@ async def update_post(
         if not current_file:
             raise HTTPException(status_code=404, detail="文章不存在")
 
-        # 构建文章 front-matter（文章元数据）
-        front_matter = {
-            "title": title,
-            "date": date,
-            "updated": updated,
-            "tags": tags.split(",") if tags else [],
-            "categories": categories.split(",") if categories else [],
-            "author": author,
-            "layout": layout,
-            "comments": comments,
-            "description": description,
-            "keywords": keywords.split(",") if keywords else [],
-            "top": top,
-            "cover": cover
-        }
+        # 使用 frontmatter 处理元数据和内容
+        post = frontmatter.Post(content)
+        post.metadata['title'] = title
+        post.metadata['date'] = date
+        post.metadata['updated'] = updated
+        post.metadata['tags'] = tags.split(',') if tags else []
+        post.metadata['categories'] = categories.split(',') if categories else []
+        post.metadata['author'] = author
+        post.metadata['layout'] = layout
+        post.metadata['comments'] = comments
+        post.metadata['description'] = description
+        post.metadata['keywords'] = keywords.split(',') if keywords else []
+        post.metadata['top'] = top
+        post.metadata['cover'] = cover
 
         # 添加自定义字段
-        custom_fields = json.loads(customFields)
-        front_matter.update(custom_fields)
+        custom_data = json.loads(customFields)
+        post.metadata.update(custom_data)
 
-        # 生成 YAML 格式的 front-matter
-        yaml_content = "---\n"
-        yaml_content += yaml.dump(front_matter, allow_unicode=True)
-        yaml_content += "---\n\n"
-        yaml_content += content
+        # 生成最终的文件内容
+        final_content = frontmatter.dumps(post)
 
         # 确定目标文件路径
         target_file = os.path.join(target_dir, filename)
@@ -337,9 +333,9 @@ async def update_post(
             if os.path.exists(current_file):
                 os.remove(current_file)
 
-        # 异步写入文件内容
-        async with aiofiles.open(target_file, "w", encoding="utf-8") as f:
-            await f.write(yaml_content)
+        # 异步写入文件内容，指定 newline='' 防止自动转换换行符
+        async with aiofiles.open(target_file, "w", encoding="utf-8", newline='') as f:
+            await f.write(final_content)
 
         return {"message": "文章更新成功"}
     except Exception as e:

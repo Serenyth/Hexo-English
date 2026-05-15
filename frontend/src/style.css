@@ -1,0 +1,39 @@
+/* 定义主题变量 */
+:root {
+  /* 亮色主题 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f7fa;
+  --text-primary: #303133;
+  --text-secondary: #606266;
+  --text-muted: #909399;
+  --border-color: #ebeef5;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --primary-color: #409EFF;
+  --primary-bg: #ecf5ff;
+}
+
+/* 暗色主题 */
+:root.dark {
+  --bg-primary: #1f2937;
+  --bg-secondary: #111827;
+  --text-primary: #e5e7eb;
+  --text-secondary: #d1d5db;
+  --text-muted: #e0e0e0;
+  --border-color: #374151;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --primary-color: #60a5fa;
+  --primary-bg: #1e3a8a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100vh;
+  width: 100%;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}

@@ -3,6 +3,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.blog import router as blog_router
 from app.api.posts import router as posts_router
+from app.api.file_dialog import router as file_dialog_router
+from app.api.essays import router as essays_router
+
 
 # 创建FastAPI应用
 app = FastAPI(
@@ -24,6 +27,8 @@ app.add_middleware(
 # 注册路由
 app.include_router(blog_router, prefix="/api/blog", tags=["博客目录"])
 app.include_router(posts_router, prefix="/api/posts", tags=["文章管理"])
+app.include_router(file_dialog_router, prefix="/api/file-dialog", tags=["文件对话框"])
+app.include_router(essays_router, prefix="/api", tags=["即刻说说"]) # 添加 essays 路由
 
 # 根路由
 @app.get("/")
@@ -32,4 +37,9 @@ async def root():
 
 # 启动服务器
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    # 在打包后的环境中，禁用彩色日志和文件监视
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=7888, 
+    )

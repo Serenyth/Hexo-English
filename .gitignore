@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.venv
+venv/
+.env
+.venv/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 配置文件（可能包含隐私）
+backend/config/blog_config.json
+backend/app/config/server.json
+
+# 博客目录（个人内容）
+**/source/
+**/public/
+**/.deploy_git/
+
+# 日志
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.temp
